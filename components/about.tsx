@@ -26,32 +26,33 @@ export default function About() {
     };
   }, []);
 
-  useEffect(() => {
-    const cards = sectionRef.current?.querySelectorAll(".card");
-    if (!cards) return;
+useEffect(() => {
+  const cards = sectionRef.current?.querySelectorAll(".card");
+  if (!cards) return;
 
-    const handleMouseMove = (e: MouseEvent, card: HTMLElement) => {
-      const { left, top, width, height } = card.getBoundingClientRect();
-      const x = (e.clientX - left) / width - 0.5;
-      const y = (e.clientY - top) / height - 0.5;
-      card.style.transform = `perspective(800px) rotateY(${x * 12}deg) rotateX(${y * -12}deg) scale(1.02)`;
-    };
+  const handleMouseMove = (e: MouseEvent, card: HTMLElement) => {
+    const { left, top, width, height } = card.getBoundingClientRect();
+    const x = (e.clientX - left) / width - 0.5;
+    const y = (e.clientY - top) / height - 0.5;
+    card.style.transform = `perspective(800px) rotateY(${x * 12}deg) rotateX(${y * -12}deg) scale(1.02)`;
+  };
 
-    cards.forEach((card) => {
-      card.addEventListener("mousemove", (e) => handleMouseMove(e as MouseEvent, card as HTMLElement));
-      card.addEventListener("mouseleave", () => {
-        card.style.transform = "perspective(800px) rotateY(0deg) rotateX(0deg) scale(1)";
-      });
-    });
+  const handleMouseLeave = (card: HTMLElement) => {
+    card.style.transform = "perspective(800px) rotateY(0deg) rotateX(0deg) scale(1)";
+  };
 
+  cards.forEach((card) => {
+    const htmlCard = card as HTMLElement; // Cast to HTMLElement
+    card.addEventListener("mousemove", (e) => handleMouseMove(e as MouseEvent, htmlCard));
+    card.addEventListener("mouseleave", () => handleMouseLeave(htmlCard));
+
+    // Cleanup
     return () => {
-      cards.forEach((card) => {
-        card.removeEventListener("mousemove", handleMouseMove);
-        card.removeEventListener("mouseleave", () => {});
-      });
+      card.removeEventListener("mousemove", (e) => handleMouseMove(e as MouseEvent, htmlCard));
+      card.removeEventListener("mouseleave", () => handleMouseLeave(htmlCard));
     };
-  }, []);
-
+  });
+}, []);
   return (
     <section
       id="about"

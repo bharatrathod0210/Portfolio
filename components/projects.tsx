@@ -1,9 +1,28 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink, Code, Star, GitFork, Users, CreditCard, Link, Database, Shield, Zap } from "lucide-react";
+import {
+  Github,
+  ExternalLink,
+  Code,
+  Star,
+  GitFork,
+  Users,
+  CreditCard,
+  Link,
+  Database,
+  Shield,
+  Zap,
+} from "lucide-react";
 
 export default function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -18,7 +37,15 @@ export default function Projects() {
         "A comprehensive job management platform with 4 panels: Super Admin, Company, Worker, and Customer. Companies can create customers and workers, generate work quotes, contracts, and invoices with integrated payment gateways.",
       image: "/placeholder.svg?height=200&width=400",
       category: "fullstack",
-      technologies: ["React", "Node.js", "Express", "MongoDB", "Stripe", "PayPal", "Apple Pay"],
+      technologies: [
+        "React",
+        "Node.js",
+        "Express",
+        "MongoDB",
+        "Stripe",
+        "PayPal",
+        "Apple Pay",
+      ],
       github: "#",
       demo: "https://app.cloudjobmanager.com",
       features: [
@@ -38,7 +65,14 @@ export default function Projects() {
         "An automated backlink monitoring system that runs on cron jobs to track backlink status, count, and provides success/failure reports with detailed analytics.",
       image: "/placeholder.svg?height=200&width=400",
       category: "fullstack",
-      technologies: ["React", "Node.js", "Cron Jobs", "MongoDB", "Express", "Analytics"],
+      technologies: [
+        "React",
+        "Node.js",
+        "Cron Jobs",
+        "MongoDB",
+        "Express",
+        "Analytics",
+      ],
       github: "#",
       demo: "https://app.trackbacklinks.io",
       features: [
@@ -118,7 +152,13 @@ export default function Projects() {
         "A comprehensive security monitoring dashboard with real-time threat detection and automated response systems.",
       image: "/placeholder.svg?height=200&width=400",
       category: "fullstack",
-      technologies: ["React", "Node.js", "Socket.io", "MongoDB", "Security APIs"],
+      technologies: [
+        "React",
+        "Node.js",
+        "Socket.io",
+        "MongoDB",
+        "Security APIs",
+      ],
       github: "#",
       demo: "#",
       features: [
@@ -133,7 +173,10 @@ export default function Projects() {
     },
   ];
 
-  const filteredProjects = filter === "all" ? projects : projects.filter((project) => project.category === filter);
+  const filteredProjects =
+    filter === "all"
+      ? projects
+      : projects.filter((project) => project.category === filter);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -144,7 +187,7 @@ export default function Projects() {
           }
         });
       },
-      { threshold: 0.2 },
+      { threshold: 0.2 }
     );
 
     const elements = sectionRef.current?.querySelectorAll(".animate-on-scroll");
@@ -163,22 +206,33 @@ export default function Projects() {
       const { left, top, width, height } = card.getBoundingClientRect();
       const x = (e.clientX - left) / width - 0.5;
       const y = (e.clientY - top) / height - 0.5;
-      card.style.transform = `perspective(800px) rotateY(${x * 12}deg) rotateX(${y * -12}deg) scale(1.02)`;
+      card.style.transform = `perspective(800px) rotateY(${
+        x * 12
+      }deg) rotateX(${y * -12}deg) scale(1.02)`;
+    };
+
+    const handleMouseLeave = (card: HTMLElement) => {
+      card.style.transform =
+        "perspective(800px) rotateY(0deg) rotateX(0deg) scale(1)";
     };
 
     cards.forEach((card) => {
-      card.addEventListener("mousemove", (e) => handleMouseMove(e as MouseEvent, card as HTMLElement));
-      card.addEventListener("mouseleave", () => {
-        card.style.transform = "perspective(800px) rotateY(0deg) rotateX(0deg) scale(1)";
-      });
-    });
+      const htmlCard = card as HTMLElement; // Cast to HTMLElement
+      card.addEventListener("mousemove", (e) =>
+        handleMouseMove(e as MouseEvent, htmlCard)
+      );
+      card.addEventListener("mouseleave", () => handleMouseLeave(htmlCard));
 
-    return () => {
-      cards.forEach((card) => {
-        card.removeEventListener("mousemove", handleMouseMove);
-        card.removeEventListener("mouseleave", () => {});
-      });
-    };
+      // Cleanup
+      return () => {
+        card.removeEventListener("mousemove", (e) =>
+          handleMouseMove(e as MouseEvent, htmlCard)
+        );
+        card.removeEventListener("mouseleave", () =>
+          handleMouseLeave(htmlCard)
+        );
+      };
+    });
   }, []);
 
   return (
@@ -251,7 +305,8 @@ export default function Projects() {
             <div className="absolute -bottom-1 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></div>
           </h2>
           <p className="mt-6 text-base text-gray-300 max-w-2xl mx-auto">
-            Here are some of the projects I've worked on, featuring real-world applications with complex functionality.
+            Here are some of the projects I've worked on, featuring real-world
+            applications with complex functionality.
           </p>
         </div>
 
@@ -319,11 +374,19 @@ export default function Projects() {
                     </CardTitle>
                     <div className="flex items-center space-x-2">
                       <div className="flex items-center text-xs text-gray-400 group-hover:text-blue-400 transition-colors duration-200">
-                        <Star className={`h-3 w-3 mr-1 ${hoveredCard === project.id ? "animate-pulse" : ""}`} />
+                        <Star
+                          className={`h-3 w-3 mr-1 ${
+                            hoveredCard === project.id ? "animate-pulse" : ""
+                          }`}
+                        />
                         <span>24</span>
                       </div>
                       <div className="flex items-center text-xs text-gray-400 group-hover:text-blue-400 transition-colors duration-200">
-                        <GitFork className={`h-3 w-3 mr-1 ${hoveredCard === project.id ? "animate-pulse" : ""}`} />
+                        <GitFork
+                          className={`h-3 w-3 mr-1 ${
+                            hoveredCard === project.id ? "animate-pulse" : ""
+                          }`}
+                        />
                         <span>8</span>
                       </div>
                     </div>
@@ -335,10 +398,15 @@ export default function Projects() {
 
                 <CardContent className="pb-2 flex-grow relative z-10">
                   <div className="mb-4">
-                    <h4 className="text-xs font-medium text-blue-400 mb-2">Key Features:</h4>
+                    <h4 className="text-xs font-medium text-blue-400 mb-2">
+                      Key Features:
+                    </h4>
                     <ul className="text-xs text-gray-300 space-y-1">
                       {project.features.slice(0, 3).map((feature, idx) => (
-                        <li key={idx} className="flex items-center transform transition-all duration-200 hover:translate-x-1">
+                        <li
+                          key={idx}
+                          className="flex items-center transform transition-all duration-200 hover:translate-x-1"
+                        >
                           <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
                           {feature}
                         </li>
@@ -385,9 +453,7 @@ export default function Projects() {
                     </Button>
                   </div>
                 </CardFooter>
-                <div
-                  className="absolute -bottom-8 -right-8 w-20 h-20 bg-blue-500/30 rounded-xl group-hover:scale-130 transition-transform duration-300"
-                ></div>
+                <div className="absolute -bottom-8 -right-8 w-20 h-20 bg-blue-500/30 rounded-xl group-hover:scale-130 transition-transform duration-300"></div>
                 <div
                   className="absolute -bottom-1 -right-1 w-2.5 h-2.5 rounded-full bg-blue-500 opacity-70 animate-ping"
                   style={{ animationDuration: "1.2s" }}
@@ -397,7 +463,10 @@ export default function Projects() {
           ))}
         </div>
 
-        <div className="text-center mt-12 animate-on-scroll opacity-0" style={{ animationDelay: "100ms" }}>
+        <div
+          className="text-center mt-12 animate-on-scroll opacity-0"
+          style={{ animationDelay: "100ms" }}
+        >
           <Button
             className="bg-blue-600 hover:bg-blue-700 text-white relative overflow-hidden group"
             onClick={() => window.open("https://github.com", "_blank")}
@@ -420,7 +489,8 @@ export default function Projects() {
           }
         }
         @keyframes glow {
-          0%, 100% {
+          0%,
+          100% {
             transform: scale(1);
             opacity: 0.2;
           }
@@ -444,7 +514,8 @@ export default function Projects() {
           }
         }
         @keyframes pulse {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 1;
           }
           50% {

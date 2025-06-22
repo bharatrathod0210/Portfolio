@@ -5,7 +5,15 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Instagram } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  Github,
+  Linkedin,
+  Instagram,
+} from "lucide-react";
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -55,7 +63,7 @@ export default function Contact() {
           }
         });
       },
-      { threshold: 0.2 },
+      { threshold: 0.2 }
     );
 
     const elements = sectionRef.current?.querySelectorAll(".animate-on-scroll");
@@ -74,22 +82,33 @@ export default function Contact() {
       const { left, top, width, height } = card.getBoundingClientRect();
       const x = (e.clientX - left) / width - 0.5;
       const y = (e.clientY - top) / height - 0.5;
-      card.style.transform = `perspective(800px) rotateY(${x * 12}deg) rotateX(${y * -12}deg) scale(1.02)`;
+      card.style.transform = `perspective(800px) rotateY(${
+        x * 12
+      }deg) rotateX(${y * -12}deg) scale(1.02)`;
+    };
+
+    const handleMouseLeave = (card: HTMLElement) => {
+      card.style.transform =
+        "perspective(800px) rotateY(0deg) rotateX(0deg) scale(1)";
     };
 
     cards.forEach((card) => {
-      card.addEventListener("mousemove", (e) => handleMouseMove(e as MouseEvent, card as HTMLElement));
-      card.addEventListener("mouseleave", () => {
-        card.style.transform = "perspective(800px) rotateY(0deg) rotateX(0deg) scale(1)";
-      });
-    });
+      const htmlCard = card as HTMLElement; // Cast to HTMLElement
+      card.addEventListener("mousemove", (e) =>
+        handleMouseMove(e as MouseEvent, htmlCard)
+      );
+      card.addEventListener("mouseleave", () => handleMouseLeave(htmlCard));
 
-    return () => {
-      cards.forEach((card) => {
-        card.removeEventListener("mousemove", handleMouseMove);
-        card.removeEventListener("mouseleave", () => {});
-      });
-    };
+      // Cleanup
+      return () => {
+        card.removeEventListener("mousemove", (e) =>
+          handleMouseMove(e as MouseEvent, htmlCard)
+        );
+        card.removeEventListener("mouseleave", () =>
+          handleMouseLeave(htmlCard)
+        );
+      };
+    });
   }, []);
 
   return (
@@ -212,7 +231,11 @@ export default function Contact() {
                       className="rounded-full bg-black/60 border-blue-500/50 hover:bg-black/70 hover:border-blue-600 text-blue-400 relative overflow-hidden group"
                       asChild
                     >
-                      <a href={social.href} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <span className="absolute inset-0 w-full h-full bg-blue-500/20 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></span>
                         {social.icon}
                       </a>
@@ -320,7 +343,8 @@ export default function Contact() {
           }
         }
         @keyframes glow {
-          0%, 100% {
+          0%,
+          100% {
             transform: scale(1);
             opacity: 0.2;
           }
@@ -352,7 +376,8 @@ export default function Contact() {
           }
         }
         @keyframes pulse {
-          0%, 100% {
+          0%,
+          100% {
             opacity: 1;
           }
           50% {

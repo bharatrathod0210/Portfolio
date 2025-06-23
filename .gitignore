@@ -27,13 +27,3 @@ yarn-error.log*
 next-env.d.ts
 
 
-/node_modules
-/.next
-/out
-/build
-.env*
-.vscode
-*.tsbuildinfo
-next-env.d.ts
-*.log
-.DS_Store

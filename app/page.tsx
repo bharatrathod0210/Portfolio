@@ -2,18 +2,22 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import Navbar from "@/components/navbar"
-import Hero from "@/components/hero"
-import About from "@/components/about"
-import Skills from "@/components/skills"
-import Projects from "@/components/projects"
-import Contact from "@/components/contact"
-import Footer from "@/components/footer"
-import ParticleBackground from "@/components/particle-background"
-import FloatingCode from "@/components/floating-code"
-import AnimatedRibbons from "@/components/animated-ribbons"
-import FloatingShapes from "@/components/floating-shapes"
 import { ThemeProvider } from "@/components/theme-provider"
+
+import dynamic from "next/dynamic"
+
+const Navbar = dynamic(() => import("@/components/navbar"))
+const Hero = dynamic(() => import("@/components/hero"))
+const About = dynamic(() => import("@/components/about"))
+const Skills = dynamic(() => import("@/components/skills"))
+const Projects = dynamic(() => import("@/components/projects"))
+const Contact = dynamic(() => import("@/components/contact"))
+const Footer = dynamic(() => import("@/components/footer"))
+const ParticleBackground = dynamic(() => import("@/components/particle-background"))
+const FloatingCode = dynamic(() => import("@/components/floating-code"))
+const AnimatedRibbons = dynamic(() => import("@/components/animated-ribbons"))
+const FloatingShapes = dynamic(() => import("@/components/floating-shapes"))
+
 
 const AttractiveLoader = () => {
   const [mounted, setMounted] = useState(false)

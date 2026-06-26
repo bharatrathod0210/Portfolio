@@ -73,10 +73,10 @@ function ExperienceCard({ experience, isEven }) {
           </p>
 
           {achievements.length > 0 && (
-            <ul className="space-y-2 mb-4 relative z-10">
-              {achievements.map((a, i) => (
-                <li key={i} className="text-sm text-white/70 flex items-start gap-2">
-                  <span style={{ color }} className="mt-0.5 flex-shrink-0">▹</span>
+            <ul className="space-y-2 mb-6">
+              {(achievements || []).map((a, i) => (
+                <li key={i} className="text-white/60 text-sm flex items-start gap-2">
+                  <span style={{ color }} className="mt-1 flex-shrink-0">▹</span>
                   <span>{a}</span>
                 </li>
               ))}
@@ -168,9 +168,9 @@ export default function Experience() {
           </div>
 
           <div className="relative space-y-16 lg:space-y-24">
-            {experiences.map((exp, i) => (
+            {(experiences || []).map((exp, i) => (
               <ExperienceCard 
-                key={exp._id || exp.id} 
+                key={exp?._id || exp?.id || i} 
                 experience={exp} 
                 isEven={i % 2 === 0} 
               />

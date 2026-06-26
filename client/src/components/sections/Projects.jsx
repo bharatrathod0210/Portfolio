@@ -139,14 +139,16 @@ const ProjectCard = forwardRef(({ project, index }, forwardedRef) => {
           {shortText}
         </p>
 
-        <div className="flex flex-wrap gap-1.5">
-          {techList.slice(0, 4).map((t) => (
-            <span key={t} className="tech-tag">{t}</span>
-          ))}
-          {techList.length > 4 && (
-            <span className="tech-tag">+{techList.length - 4}</span>
-          )}
-        </div>
+        {techList?.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-5">
+            {(techList || []).slice(0, 4).map((t) => (
+              <span key={t} className="tech-tag">{t}</span>
+            ))}
+            {techList.length > 4 && (
+              <span className="tech-tag">+{techList.length - 4}</span>
+            )}
+          </div>
+        )}
       </div>
     </motion.div>
   );
@@ -184,7 +186,7 @@ export default function Projects() {
     : projects.filter((p) => p.category === activeCategory);
 
   // Only show categories that actually have projects
-  const availableCategories = ['All', ...new Set(projects.map((p) => p.category))];
+  const availableCategories = ['All', ...new Set((projects || []).map((p) => p.category))];
 
   return (
     <section id="projects" className="relative section-padding bg-transparent overflow-hidden">
@@ -225,9 +227,9 @@ export default function Projects() {
         ) : (
           <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
-              {filtered.map((project, i) => (
+              {(filtered || []).map((project, i) => (
                 <ProjectCard
-                  key={project._id || project.id}
+                  key={project?._id || project?.id || i}
                   project={project}
                   index={i}
                 />

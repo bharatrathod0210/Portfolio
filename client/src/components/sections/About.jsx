@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { FiDownload, FiMapPin, FiMail, FiArrowRight, FiTerminal } from 'react-icons/fi';
 import logo from '../../assets/logo.png';
+import photo from '../../assets/photo.jpg';
 import SectionLabel from '../ui/SectionLabel';
 import MagneticButton from '../ui/MagneticButton';
 import { personal } from '../../data/portfolio';
@@ -60,7 +61,7 @@ export default function About() {
                 
                 {personal.avatar ? (
                   <img
-                    src={personal.avatar}
+                    src={photo}
                     alt={personal.name}
                     className="w-full h-full object-cover opacity-80 mix-blend-luminosity group-hover:mix-blend-normal transition-all duration-700 filter group-hover:filter-none"
                     loading="lazy"

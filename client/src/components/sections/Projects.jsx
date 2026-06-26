@@ -4,8 +4,7 @@ import { FiExternalLink, FiGithub, FiArrowRight, FiFolder } from 'react-icons/fi
 import SectionLabel from '../ui/SectionLabel';
 import GlowOrb from '../ui/GlowOrb';
 import MagneticButton from '../ui/MagneticButton';
-import api from '../../utils/api';
-import { projects as staticProjects, personal } from '../../data/portfolio';
+import { projects as staticProjects } from '../../data/portfolio';
 
 const CATEGORIES = ['All', 'fullstack', 'frontend', 'backend', 'mobile', 'other'];
 
@@ -175,18 +174,10 @@ function SkeletonCard() {
 
 // ── Main Section ──────────────────────────────────────────────────────────────
 export default function Projects() {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
-
-  useEffect(() => {
-    api.get('/projects')
-      .then((res) => {
-        setProjects(res.data?.length ? res.data : staticProjects);
-      })
-      .catch(() => setProjects(staticProjects))
-      .finally(() => setLoading(false));
-  }, []);
+  
+  // Directly use static projects
+  const projects = staticProjects;
 
   const filtered = activeCategory === 'All'
     ? projects
@@ -227,11 +218,7 @@ export default function Projects() {
         </div>
 
         {/* Grid */}
-        {loading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => <SkeletonCard key={i} />)}
-          </div>
-        ) : filtered.length === 0 ? (
+        {filtered.length === 0 ? (
           <div className="text-center py-20 text-white/30">
             <p className="text-lg">No projects in this category yet.</p>
           </div>

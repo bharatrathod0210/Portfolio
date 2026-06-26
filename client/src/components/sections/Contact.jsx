@@ -7,7 +7,6 @@ import { FiSend, FiMail, FiMapPin, FiPhone, FiGithub, FiLinkedin, FiInstagram } 
 import SectionLabel from '../ui/SectionLabel';
 import GlowOrb from '../ui/GlowOrb';
 import MagneticButton from '../ui/MagneticButton';
-import api from '../../utils/api';
 import { personal } from '../../data/portfolio';
 
 const socials = [
@@ -25,7 +24,8 @@ export default function Contact() {
   const onSubmit = async (data) => {
     setSending(true);
     try {
-      await api.post('/contact', data);
+      // Simulate network request since backend is removed
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       toast.success('Message sent! I will get back to you soon.');
       reset();
     } catch {

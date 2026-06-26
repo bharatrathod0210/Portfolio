@@ -1,23 +1,22 @@
 import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FiBriefcase, FiCalendar, FiMapPin } from 'react-icons/fi';
+import { FiBriefcase, FiCalendar } from 'react-icons/fi';
 import SectionLabel from '../ui/SectionLabel';
 import GlowOrb from '../ui/GlowOrb';
-import api from '../../utils/api';
-import { experience as staticExperience } from '../../data/portfolio';
+import { experiences as staticExperience } from '../../data/portfolio';
 
 gsap.registerPlugin(ScrollTrigger);
 
 // ── Single experience card ────────────────────────────────────────────────────
-function ExperienceCard({ exp, index }) {
+function ExperienceCard({ experience, isEven }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
-  const isEven = index % 2 === 0;
-  const color = exp.color || '#a855f7';
-  const achievements = exp.achievements || [];
-  const techList = exp.tech || [];
+  const color = experience.color || '#a855f7';
+  const achievements = experience.achievements || [];
+  const techList = experience.tech || [];
 
   return (
     <motion.div
@@ -46,11 +45,11 @@ function ExperienceCard({ exp, index }) {
           style={{ color, justifyContent: isEven ? 'flex-end' : 'flex-start' }}
         >
           <FiCalendar size={13} />
-          {exp.duration}
+          {experience.duration}
         </div>
-        <h4 className="text-2xl font-medium font-display text-white">{exp.company}</h4>
+        <h4 className="text-2xl font-medium font-display text-white">{experience.company}</h4>
         <span className="inline-block mt-2 px-3 py-1 rounded-full text-xs font-mono border border-white/10 bg-white/5 text-white/50">
-          {exp.type || 'Full-time'}{exp.period ? ` · ${exp.period}` : ''}
+          {experience.type || 'Full-time'}{experience.period ? ` · ${experience.period}` : ''}
         </span>
       </div>
 
@@ -67,11 +66,11 @@ function ExperienceCard({ exp, index }) {
           />
 
           <h3 className="text-xl font-medium mb-3 relative z-10" style={{ color }}>
-            {exp.role}
+            {experience.role}
           </h3>
 
           <p className="text-white/50 text-sm leading-relaxed mb-4 font-light relative z-10">
-            {exp.description}
+            {experience.description}
           </p>
 
           {achievements.length > 0 && (
@@ -108,53 +107,15 @@ function ExperienceCard({ exp, index }) {
   );
 }
 
-// ── Skeleton ──────────────────────────────────────────────────────────────────
-function SkeletonCard({ isEven }) {
-  return (
-    <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between">
-      <div className="absolute left-[28px] md:left-1/2 top-0 md:top-1/2 w-12 h-12 rounded-full bg-white/5 md:-translate-x-1/2 md:-translate-y-1/2 z-20" />
-      <div className={`md:w-5/12 mb-6 md:mb-0 pl-24 md:pl-0 ${isEven ? 'md:text-right md:pr-16' : 'md:order-3 md:pl-16'}`}>
-        <div className="h-3 bg-white/5 rounded w-32 mb-2 animate-pulse" />
-        <div className="h-6 bg-white/5 rounded w-48 animate-pulse" />
-      </div>
-      <div className="hidden md:block w-2/12 order-2" />
-      <div className={`md:w-5/12 pl-24 md:pl-0 ${isEven ? 'md:order-3 md:pl-16' : 'md:pr-16'}`}>
-        <div className="glass rounded-2xl p-6 border border-white/5 space-y-3 animate-pulse">
-          <div className="h-5 bg-white/5 rounded w-3/4" />
-          <div className="h-3 bg-white/5 rounded w-full" />
-          <div className="h-3 bg-white/5 rounded w-4/5" />
-          <div className="flex gap-2 mt-2">
-            {[...Array(3)].map((_, i) => <div key={i} className="h-5 w-16 bg-white/5 rounded" />)}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ── Main section ──────────────────────────────────────────────────────────────
 export default function Experience() {
-  const [experiences, setExperiences] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const experiences = staticExperience;
   const lineRef = useRef(null);
   const sectionRef = useRef(null);
 
-  // ── Fetch from API ──────────────────────────────────────────────────────────
-  useEffect(() => {
-    api.get('/experience')
-      .then((res) => {
-        // Use API data if any exists, otherwise fall back to static
-        setExperiences(res.data?.length ? res.data : staticExperience);
-      })
-      .catch(() => {
-        setExperiences(staticExperience);
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
   // ── GSAP animated timeline line ─────────────────────────────────────────────
   useEffect(() => {
-    if (loading || !lineRef.current || !sectionRef.current) return;
+    if (!lineRef.current || !sectionRef.current) return;
     const ctx = gsap.context(() => {
       gsap.fromTo(
         lineRef.current,
@@ -172,7 +133,7 @@ export default function Experience() {
       );
     });
     return () => ctx.revert();
-  }, [loading]);
+  }, []);
 
   return (
     <section
@@ -207,17 +168,14 @@ export default function Experience() {
             />
           </div>
 
-          <div className="space-y-16">
-            {loading
-              ? [...Array(3)].map((_, i) => <SkeletonCard key={i} isEven={i % 2 === 0} />)
-              : experiences.map((exp, i) => (
-                  <ExperienceCard
-                    key={exp._id || exp.id}
-                    exp={exp}
-                    index={i}
-                  />
-                ))
-            }
+          <div className="relative space-y-16 lg:space-y-24">
+            {experiences.map((exp, i) => (
+              <ExperienceCard 
+                key={exp._id || exp.id} 
+                experience={exp} 
+                isEven={i % 2 === 0} 
+              />
+            ))}
           </div>
         </div>
       </div>

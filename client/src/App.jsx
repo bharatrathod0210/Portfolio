@@ -11,18 +11,14 @@ import ScrollProgress from './components/ui/ScrollProgress';
 import NoiseOverlay from './components/ui/NoiseOverlay';
 import Navbar from './components/layout/Navbar';
 import Home from './pages/Home';
-import AdminApp from './admin/AdminApp';
 
 gsap.registerPlugin(ScrollTrigger);
 
 function PortfolioWrapper() {
   const location = useLocation();
-  const isAdmin = location.pathname.startsWith('/admin');
   const lenisRef = useRef(null);
 
   useEffect(() => {
-    if (isAdmin) return;
-
     const lenis = new Lenis({
       duration: 1.4,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -38,9 +34,7 @@ function PortfolioWrapper() {
       lenis.destroy();
       gsap.ticker.remove((time) => lenis.raf(time * 1000));
     };
-  }, [isAdmin]);
-
-  if (isAdmin) return null;
+  }, []);
 
   return (
     <>
@@ -76,7 +70,6 @@ export default function App() {
       <PortfolioWrapper />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/admin/*" element={<AdminApp />} />
       </Routes>
     </BrowserRouter>
   );

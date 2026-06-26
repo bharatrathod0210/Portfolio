@@ -1,0 +1,11 @@
+import express from 'express';
+import asyncHandler from 'express-async-handler';
+import { sendContact, getContacts, markRead, toggleStar, deleteContact } from '../controllers/contact.controller.js';
+import { protect } from '../middleware/auth.middleware.js';
+const router = express.Router();
+router.post('/', asyncHandler(sendContact));
+router.get('/', protect, asyncHandler(getContacts));
+router.patch('/:id/read', protect, asyncHandler(markRead));
+router.patch('/:id/star', protect, asyncHandler(toggleStar));
+router.delete('/:id', protect, asyncHandler(deleteContact));
+export default router;

@@ -1,0 +1,11 @@
+import express from 'express';
+import asyncHandler from 'express-async-handler';
+import { getExperiences, getExperience, createExperience, updateExperience, deleteExperience } from '../controllers/experience.controller.js';
+import { protect } from '../middleware/auth.middleware.js';
+const router = express.Router();
+router.get('/', asyncHandler(getExperiences));
+router.get('/:id', asyncHandler(getExperience));
+router.post('/', protect, asyncHandler(createExperience));
+router.put('/:id', protect, asyncHandler(updateExperience));
+router.delete('/:id', protect, asyncHandler(deleteExperience));
+export default router;

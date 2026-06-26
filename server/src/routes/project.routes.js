@@ -1,0 +1,11 @@
+import express from 'express';
+import asyncHandler from 'express-async-handler';
+import { getProjects, getProject, createProject, updateProject, deleteProject } from '../controllers/project.controller.js';
+import { protect } from '../middleware/auth.middleware.js';
+const router = express.Router();
+router.get('/', asyncHandler(getProjects));
+router.get('/:id', asyncHandler(getProject));
+router.post('/', protect, asyncHandler(createProject));
+router.put('/:id', protect, asyncHandler(updateProject));
+router.delete('/:id', protect, asyncHandler(deleteProject));
+export default router;

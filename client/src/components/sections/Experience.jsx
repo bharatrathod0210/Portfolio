@@ -1,4 +1,3 @@
-import { useRef, useEffect, useState } from 'react';
 import { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import gsap from 'gsap';
@@ -6,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FiBriefcase, FiCalendar } from 'react-icons/fi';
 import SectionLabel from '../ui/SectionLabel';
 import GlowOrb from '../ui/GlowOrb';
-import { experiences as staticExperience } from '../../data/portfolio';
+import { experience as staticExperience } from '../../data/portfolio';
 
 gsap.registerPlugin(ScrollTrigger);
 

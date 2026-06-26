@@ -4,7 +4,7 @@ import { FiExternalLink, FiGithub, FiArrowRight, FiFolder } from 'react-icons/fi
 import SectionLabel from '../ui/SectionLabel';
 import GlowOrb from '../ui/GlowOrb';
 import MagneticButton from '../ui/MagneticButton';
-import { projects as staticProjects } from '../../data/portfolio';
+import { projects as staticProjects, personal } from '../../data/portfolio';
 
 const CATEGORIES = ['All', 'fullstack', 'frontend', 'backend', 'mobile', 'other'];
 

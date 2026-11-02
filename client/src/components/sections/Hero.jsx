@@ -44,16 +44,16 @@ export default function Hero() {
             <span className="line"><span>that businesses</span></span>{' '}
             <span className="line"><span><em>run on.</em></span></span>
           </h1>
-          <p className="hero-lead rise" style={{ '--d': '380ms' }}>
+          <p className="hero-lead rise" style={{ '--d': '160ms' }}>
             Web apps, mobile apps and payment systems, from the database to the last pixel.
           </p>
-          <div className="hero-cta rise" style={{ '--d': '460ms' }}>
+          <div className="hero-cta rise" style={{ '--d': '220ms' }}>
             <Link to="/#work" className="btn btn-solid">View my work <ArrowDown /></Link>
             <a href={personal.resume} target="_blank" rel="noreferrer" className="btn btn-line">
               Resume <ArrowUpRight />
             </a>
           </div>
-          <dl className="hero-stats rise" style={{ '--d': '540ms' }}>
+          <dl className="hero-stats rise" style={{ '--d': '280ms' }}>
             {stats.map((s) => (
               <div key={s.label}>
                 <dt>{s.label}</dt>

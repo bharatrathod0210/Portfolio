@@ -26,7 +26,7 @@ function Browser({ project, eager }) {
 
 function PebackPhone() {
   return (
-    <figure className="stage" role="img" aria-label="Illustration of the Peback app showing a points balance and a payment that earns points">
+    <div className="stage" role="img" aria-label="Illustration of the Peback app showing a points balance and a payment that earns points">
       <div className="phone" aria-hidden="true">
         <div className="phone-notch" />
         <p className="ph-hello">Your rewards</p>
@@ -44,8 +44,8 @@ function PebackPhone() {
         </ul>
         <div className="ph-cta">Pay with points</div>
       </div>
-      <figcaption className="stage-note">Illustrative UI</figcaption>
-    </figure>
+      <span className="stage-note">Illustrative UI</span>
+    </div>
   );
 }
 
@@ -58,7 +58,7 @@ function BacklinkMonitor() {
     ['forum.example', 'Unreachable', 'warn'],
   ];
   return (
-    <figure className="stage" role="img" aria-label="Illustration of a backlink monitor listing links and their status">
+    <div className="stage" role="img" aria-label="Illustration of a backlink monitor listing links and their status">
       <div className="monitor" aria-hidden="true">
         <div className="mon-head">
           <b>Backlink health</b>
@@ -73,8 +73,8 @@ function BacklinkMonitor() {
           ))}
         </ul>
       </div>
-      <figcaption className="stage-note">Illustrative UI</figcaption>
-    </figure>
+      <span className="stage-note">Illustrative UI</span>
+    </div>
   );
 }
 

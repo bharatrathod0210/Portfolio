@@ -8,7 +8,10 @@ const dist = path.join(root, 'dist');
 const ssrDir = path.join(root, '.ssr');
 
 const { render, routes, headFor } = await import(pathToFileURL(path.join(ssrDir, 'entry-server.js')).href);
-const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
+// Inline the stylesheet so it never blocks first paint.
+const template = fs
+  .readFileSync(path.join(dist, 'index.html'), 'utf8')
+  .replace(/<link rel="stylesheet"[^>]*href="([^"]+)"[^>]*>/, (_, href) => `<style>${fs.readFileSync(path.join(dist, href), 'utf8')}</style>`);
 
 const write = (file, url) => {
   const html = template

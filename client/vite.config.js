@@ -10,14 +10,6 @@ export default defineConfig({
     },
   },
   build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-
-          framer: ['framer-motion'],
-          gsap: ['gsap'],
-        },
-      },
-    },
+    target: 'es2020',
   },
 });
